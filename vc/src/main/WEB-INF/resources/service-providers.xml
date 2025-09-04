@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<HttpServiceBroker authenticator="br.com.sankhya.dwf.services.DefaultAuthenticator" >
+<providers>
+    <provider domain="ListarRACSP" class="br.com.tratho.rac.ListarRACSPBean" type="ejb-stateless" jndi="br/com/tratho/rac/ListarRACSPBean" authentication="true"/>
+</providers>
+</HttpServiceBroker>

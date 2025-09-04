@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../.gradle/metadados.xsd">
+
+    <table name="REGISTROATENDCLIENTE" sequenceType="A" sequenceField="NUATEND">
+        <description>Registro de Atendimento ao Cliente</description>
+        <primaryKey>
+            <field name="NUATEND"/>
+        </primaryKey>
+        <instances>
+            <instance name="RAC">
+                <description>Registro de Atendimento ao Cliente</description>
+            </instance>
+        </instances>
+        <fields>
+            <field name="NUATEND" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Número de atendimento</description>
+            </field>
+            <field name="CODPARC" dataType="PESQUISA" targetInstance="Parceiro" targetField="CODPARC" targetType="INTEIRO"  allowSearch="S" visibleOnSearch="S"   >
+                <description>Cliente</description>
+            </field>
+            <field name="DTABERTURA" dataType="DATA_HORA" allowSearch="S" visibleOnSearch="S" >
+                <description>Data de abertura</description>
+                <expression><![CDATA[ result=$valorCampo;
+                    if(result==null ){
+                    return $ctx_dh_atual;
+                    }
+                    return result;]]>
+                    </expression>
+            </field>
+            <field name="CODUSU" dataType="PESQUISA" targetInstance="Usuario" targetField="CODUSU" targetType="INTEIRO"  allowSearch="S" visibleOnSearch="S"   >
+                <description>Código usuário</description>
+                <expression><![CDATA[ result=$valorCampo;
+                    if(result==null ){
+                    return $ctx_usuario_logado;
+                    }
+                    return result;]]>
+                </expression>
+            </field>
+            <field name="NUMNOTA" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Número da Nota Fiscal</description>
+            </field>
+
+            <field name="OCORRENCIA" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Ocorrência</description>
+            </field>
+
+            <field name="ANALISECAUSA" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Analise da Causa</description>
+            </field>
+
+            <field name="ACAOIMEDIATA" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Ação Imediata</description>
+            </field>
+
+            <field name="TIPOOCORRENCIA" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S">
+                <description>Tipo de Ocorrência</description>
+            </field>
+
+            <field name="CATEGORIA" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Categoria do atendimento</description>
+            </field>
+
+            <field name="OBSQUALIDADE" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description><![CDATA[ Observação (Qualidade) ]]></description>
+            </field>
+
+            <field name="APROVACAOGERENCIACOMERCIAL" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Aprovação da Gerência (Comercial)</description>
+            </field>
+
+            <field name="DTHORAAPROVACAOCOMERCIAL" dataType="DATA_HORA" allowSearch="S" visibleOnSearch="S" >
+                <description>Data/Hora de Aprovação (Comercial)</description>
+            </field>
+
+            <field name="JUSTIFICATIVACOMERCIAL" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Justificativa (Comercial)</description>
+            </field>
+
+            <field name="APROVACAOGERENCIAFINANCEIRO" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Aprovação da Gerência (Financeiro)</description>
+            </field>
+
+            <field name="DTHORAAPROVACAOFINANCEIRO" dataType="DATA_HORA" allowSearch="S" visibleOnSearch="S" >
+                <description>Data/Hora de Aprovação (Financeiro)</description>
+            </field>
+
+            <field name="JUSTIFICATIVAFINANCEIRO" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Justificativa (Financeiro)</description>
+            </field>
+
+            <field name="CODUSUAPROVADORCOMERCIAL" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S" >
+                <description>Usuario Aprovador (Comercial)</description>
+            </field>
+
+            <field name="CODUSUAPROVADORFINANCEIRO" dataType="INTEIRO" allowSearch="S" visibleOnSearch="S" >
+                <description>Usuario Aprovador (Financeiro)</description>
+            </field>
+
+            <field name="TODOSDOCUMENTOS" dataType="TEXTO" allowSearch="S" visibleOnSearch="S" >
+                <description>Todos os documentos foram recebidos?</description>
+            </field>
+
+        </fields>
+    </table>
+
+
+</metadados>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<scripts xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../.gradle/scripts.xsd">
+    <sql nomeTabela="REGISTROATENDCLIENTE" ordem="1" executar="SE_NAO_EXISTIR" tipoObjeto="TABLE" nomeObjeto="REGISTROATENDCLIENTE">
+        <oracle>
+            CREATE TABLE REGISTROATENDCLIENTE (
+                NUATEND NUMBER PRIMARY KEY,
+                CODPARC NUMBER NOT NULL,
+                DTABERTURA TIMESTAMP DEFAULT SYSTIMESTAMP,
+                CODUSU NUMBER NOT NULL,
+                NUMNOTA NUMBER,
+                OCORRENCIA CLOB,
+                ANALISECAUSA CLOB,
+                ACAOIMEDIATA CLOB,
+                TIPOOCORRENCIA NUMBER,
+                CATEGORIA VARCHAR2(255),
+                OBSQUALIDADE CLOB,
+                APROVACAOGERENCIACOMERCIAL VARCHAR2(255),
+                DTHORAAPROVACAOCOMERCIAL TIMESTAMP,
+                JUSTIFICATIVACOMERCIAL CLOB,
+                APROVACAOGERENCIAFINANCEIRO VARCHAR2(255),
+                DTHORAAPROVACAOFINANCEIRO TIMESTAMP,
+                JUSTIFICATIVAFINANCEIRO CLOB,
+                CODUSUAPROVADORCOMERCIAL NUMBER,
+                CODUSUAPROVADORFINANCEIRO NUMBER,
+                TODOSDOCUMENTOS VARCHAR2(255)
+            );
+
+        </oracle>
+        <mssql>
+
+            CREATE TABLE REGISTROATENDCLIENTE (
+                NUATEND INT PRIMARY KEY,
+                CODPARC INT NOT NULL,
+                DTABERTURA DATETIME DEFAULT GETDATE(),
+                CODUSU INT NOT NULL,
+                NUMNOTA INT,
+                OCORRENCIA VARCHAR(MAX),
+                ANALISECAUSA VARCHAR(MAX),
+                ACAOIMEDIATA VARCHAR(MAX),
+                TIPOOCORRENCIA INT,
+                CATEGORIA VARCHAR(255),
+                OBSQUALIDADE VARCHAR(MAX),
+                APROVACAOGERENCIACOMERCIAL VARCHAR(255),
+                DTHORAAPROVACAOCOMERCIAL DATETIME,
+                JUSTIFICATIVACOMERCIAL VARCHAR(MAX),
+                APROVACAOGERENCIAFINANCEIRO VARCHAR(255),
+                DTHORAAPROVACAOFINANCEIRO DATETIME,
+                JUSTIFICATIVAFINANCEIRO VARCHAR(MAX),
+                CODUSUAPROVADORCOMERCIAL INT,
+                CODUSUAPROVADORFINANCEIRO INT,
+                TODOSDOCUMENTOS VARCHAR(255)
+            );
+        </mssql>
+    </sql>
+</scripts>

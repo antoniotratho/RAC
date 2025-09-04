@@ -1,0 +1,108 @@
+    .aba {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .ativa {
+      font-weight: bold;
+      border-bottom: 2px solid blue;
+    }
+
+    .container-aba {
+      position: relative;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    .conteudo-aba {
+      position: absolute;
+      width: 100%;
+      transition: transform 0.4s ease;
+      opacity: 1;
+    }
+
+    .slide-left-enter {
+      transform: translateX(100%);
+    }
+
+    .slide-left-active {
+      transform: translateX(0%);
+    }
+
+    .slide-right-enter {
+      transform: translateX(-100%);
+    }
+
+    .slide-right-active {
+      transform: translateX(0%);
+    }
+
+    .timeline-container {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+    }
+
+    .timeline-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      width: 25%;
+    }
+
+    .timeline-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .timeline-circle.active {
+      background-color: #2563eb;
+      color: white;
+    }
+
+    .timeline-label {
+      margin-top: 8px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: medium;
+    }
+
+    .timeline-connector {
+      position: absolute;
+      top: 40px;
+      left: calc(12.5% + 20px);
+      right: calc(12.5% + 20px);
+      height: 4px;
+      background-color: #e5e7eb;
+      z-index: 0;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: 40px;
+      left: calc(12.5% + 20px);
+      height: 4px;
+      background-color: #2563eb;
+      transition: width 0.3s ease;
+      z-index: 0;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }

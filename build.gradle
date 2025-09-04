@@ -1,0 +1,30 @@
+
+buildscript {
+
+    repositories{
+        mavenLocal()
+        mavenCentral()
+        maven {
+            url = uri("https://artifacts-partners.sankhya.com.br/repository/maven-releases")
+        }
+    }
+
+    dependencies {
+        classpath "br.com.sankhya.studio:gradle-plugin:1+"
+    }
+}
+
+group = 'br.com.tratho.rac'
+version="1.0.0"
+description = "Add-on Registro de Atendimento ao Cliente"
+
+apply(plugin: "br.com.sankhya.addonstudio")
+snkmodule {
+    serverFolder = 'C:\\wildfly_8180'
+    plataformaMinima = "4.28"
+}
+
+addon {
+    appKey="544ea0f8-be3b-44bf-a932-7f02f8cd9e3b"
+    parceiroNome = "TRATHO"
+}

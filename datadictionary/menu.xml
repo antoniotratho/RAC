@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<metadados xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="../.gradle/metadados.xsd">
+
+    <menu id="template" description="Addon Template" icon="/$ctx/assets/icon.png">
+        <ui id="Orcamento" url="/$ctx/MinhaTela.xhtml5" description="RAC - Registro de Atendimento ao Cliente"/>
+        <dynamicForm instance="Tratho_Addons" id="Tratho_Addons"  description="Tratho_Addons"/>
+    </menu>
+
+
+</metadados>
