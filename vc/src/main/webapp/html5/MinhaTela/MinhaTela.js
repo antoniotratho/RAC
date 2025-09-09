@@ -1,4 +1,12 @@
-angular.module('MinhaTelaApp', ['snk' ]).controller('MinhaTelaController', ['$scope', '$location', '$window', 'Criteria', 'MessageUtils', 'SkApplication', 'ObjectUtils', 'ServiceProxy',
+angular.module('MinhaTelaApp', ['snk'])
+  // filtro startFrom
+  .filter('startFrom', function() {
+    return function(input, start) {
+      if (!input || !input.length) return [];
+      start = +start; // converte para número
+      return input.slice(start);
+    }
+  }).controller('MinhaTelaController', ['$scope', '$location', '$window', 'Criteria', 'MessageUtils', 'SkApplication', 'ObjectUtils', 'ServiceProxy',
         function ($scope, $location, $window, Criteria, MessageUtils, SkApplication, ObjectUtils, ServiceProxy) {
 
             let self = this;
@@ -25,6 +33,12 @@ angular.module('MinhaTelaApp', ['snk' ]).controller('MinhaTelaController', ['$sc
                 MessageUtils.showInfo('Erro ao carregar dados: ' + JSON.stringify(error));
             });
         }
+
+        self.paginaAtual = 1; // página inicial
+        self.itensPorPagina = 10; // quantidade de itens por página
+
+  
+
 
 
         self.abaAtiva = 'listar';
@@ -56,20 +70,20 @@ angular.module('MinhaTelaApp', ['snk' ]).controller('MinhaTelaController', ['$sc
             self.progressWidth = ((stepNumber - 1) / (self.steps.length - 1)) * 75;
         };
 
-        document.querySelectorAll('button').forEach(button => {
-            button.addEventListener('click', function (e) {
-                const menu = this.nextElementSibling;
-                menu.classList.toggle('hidden');
-            });
-        });
+        document.querySelectorAll('.btn-dropdown').forEach(button => {
+    button.addEventListener('click', function (e) {
+        e.stopPropagation(); // evita fechar ao clicar no botão
+        const menu = this.nextElementSibling;
+        menu.classList.toggle('hidden');
+    });
+});
 
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('.relative')) {
-                document.querySelectorAll('.absolute').forEach(menu => {
-                    menu.classList.add('hidden');
-                });
-            }
-        });
+document.addEventListener('click', function (e) {
+    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+        menu.classList.add('hidden');
+    });
+});
+
 
             function readPermissions() {
                 var authData = SkApplication.instance().getAuthorizationData();
@@ -101,9 +115,26 @@ angular.module('MinhaTelaApp', ['snk' ]).controller('MinhaTelaController', ['$sc
                 });
             };
 
+            self.modalAberto = false;
+            self.textoModal = '';
+
+            self.abrirModal = function (texto){
+                self.textoModal = texto;
+                self.modalAberto = true
+            }
+
+            self.fecharModal = function(){
+                self.modalAberto = false;
+                self.textoModal = '';
+            }
+
+
+
+
 
 
         }])
+
 
 
 

@@ -1,0 +1,125 @@
+2025-07-04 10:46:00,498 [sw.mge.scheduler.adapter_Worker-7-] (SanNFe.java:728) [initialize] - ------------ Iniciando SanNFe v: 4.33b1330 ------------
+2025-07-04 10:46:00,601 [sw.mge.scheduler.adapter_Worker-7-] (ServerConfig.java:472) [load] - DF virtual=true
+2025-07-04 10:46:00,651 [sw.mge.scheduler.adapter_Worker-7-] (SanNFe.java:754) [initialize] - proxy habilitado: false
+2025-07-04 10:46:00,652 [sw.mge.scheduler.adapter_Worker-7-] (SanNFe.java:759) [initialize] - *************************************************
+2025-07-04 10:46:06,226 [sw.mge.scheduler.adapter_Worker-7-] (NFeWebServiceManager.java:742) [loadProvidersNFSe] - Erro ao carregar o diretório do provedor dsfabrasf203
+java.io.FileNotFoundException: Arquivo: C:\schemas\nfse\dsfabrasf203\nfse_v2_03.xsd não existe ou não é um arquivo.
+	at br.com.sankhya.nfe.command.NFeWebServiceManager.processarXSD(NFeWebServiceManager.java:2126)
+	at br.com.sankhya.nfe.command.NFeWebServiceManager.processarXSD(NFeWebServiceManager.java:2115)
+	at br.com.sankhya.nfe.command.NFeWebServiceManager.loadProvidersNFSe(NFeWebServiceManager.java:740)
+	at br.com.sankhya.nfe.command.NFeWebServiceManager.init(NFeWebServiceManager.java:167)
+	at br.com.sankhya.nfe.SanNFe.initialize(SanNFe.java:761)
+	at br.com.sankhya.nfe.SanNFe.getInstance(SanNFe.java:379)
+	at br.com.sankhya.modelcore.facades.avisossistema.CertificadosNFeAviso.getCertAhExpirarSanNFe(CertificadosNFeAviso.java:153)
+	at br.com.sankhya.modelcore.facades.avisossistema.CertificadosNFeAviso.executar(CertificadosNFeAviso.java:58)
+	at br.com.sankhya.modelcore.facades.AvisosSistemaJobBean$1.doWithTx(AvisosSistemaJobBean.java:79)
+	at br.com.sankhya.jape.core.JapeSession$SessionHandle.execWithTX(JapeSession.java:1800)
+	at br.com.sankhya.modelcore.facades.AvisosSistemaJobBean.onSchedule(AvisosSistemaJobBean.java:74)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.tinyejb.proxies.SessionBeanProxyBuilder$MethodCaller.call(SessionBeanProxyBuilder.java:220)
+	at org.tinyejb.proxies.SessionBeanProxyBuilder$TransactionWrapper.call(SessionBeanProxyBuilder.java:327)
+	at org.tinyejb.proxies.SessionBeanProxyBuilder$SessionEJBProxy.handleBusinessInterfaceMethods(SessionBeanProxyBuilder.java:106)
+	at org.tinyejb.proxies.SessionBeanProxyBuilder$SessionEJBProxy.invoke(SessionBeanProxyBuilder.java:84)
+	at com.sun.proxy.$Proxy686.onSchedule(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at br.com.sankhya.dwf.controller.servlet.module.EjbJob.invokeMethod(EjbJob.java:66)
+	at br.com.sankhya.dwf.controller.servlet.module.EjbJob.onTime(EjbJob.java:98)
+	at org.cuckoo.core.SchedulerRuntime$JobDelegation$2.run(SchedulerRuntime.java:660)
+	at br.com.sankhya.dwf.controller.servlet.module.DefaultSchedulerEnvironment.runWithoutTransaction(DefaultSchedulerEnvironment.java:153)
+	at org.cuckoo.core.SchedulerRuntime$JobDelegation.jobBody(SchedulerRuntime.java:714)
+	at org.cuckoo.core.SchedulerRuntime$JobDelegation.access$1300(SchedulerRuntime.java:586)
+	at org.cuckoo.core.SchedulerRuntime$JobDelegation$1.call(SchedulerRuntime.java:632)
+	at org.cuckoo.core.SchedulerRuntime.doWithCallbacksClassloader(SchedulerRuntime.java:444)
+	at org.cuckoo.core.SchedulerRuntime.access$1400(SchedulerRuntime.java:56)
+	at org.cuckoo.core.SchedulerRuntime$JobDelegation.execute(SchedulerRuntime.java:628)
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202)
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573)
+2025-07-04 10:46:10,025 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 10:51:10,043 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 10:56:10,059 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:01:10,074 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:06:10,209 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:11:10,394 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:16:10,639 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:21:10,806 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:26:10,824 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:31:10,840 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:36:10,861 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:41:10,874 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:46:10,896 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:51:10,906 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 11:56:10,918 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:01:10,931 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:06:10,944 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:11:10,957 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:16:10,974 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:21:10,990 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:26:11,010 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:31:11,022 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:36:11,037 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:41:11,053 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:46:11,070 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:51:11,083 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 12:56:11,097 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:01:11,111 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:06:11,125 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:11:11,136 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:16:11,148 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:21:11,164 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:26:11,179 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:31:11,193 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:36:11,207 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:41:11,223 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:46:11,239 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:51:11,253 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 13:56:11,268 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:01:11,283 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:06:11,299 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:11:11,314 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:16:11,328 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:21:11,345 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:26:11,359 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:31:11,373 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:36:11,390 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:41:11,403 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:46:11,416 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:51:11,430 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 14:56:11,443 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:01:11,452 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:06:11,463 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:11:11,515 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:16:11,633 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:21:11,650 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:26:11,668 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:31:11,685 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:36:11,700 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:41:11,714 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:46:11,728 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:51:11,742 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 15:56:11,762 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:01:11,781 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:06:11,798 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:11:11,812 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:16:11,830 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:21:11,841 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:26:11,855 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:31:11,872 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:36:11,886 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:41:11,896 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:46:11,905 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:51:11,919 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 16:56:11,934 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:01:11,947 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:06:11,962 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:11:11,977 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:16:11,993 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:21:12,008 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:26:12,022 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:31:12,036 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.
+2025-07-04 17:36:12,051 [SanNFeInternetTester-] (InternetTester.java:243) [initCnpjCert] - Nao foi possivel obter um certificado valido no registro de certificados. Isso fará com que o teste de internet falhe.

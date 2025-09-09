@@ -1,258 +1,334 @@
 <sk-application ng-controller="MinhaTelaController as ctrl" creation-complete="ctrl.init()">
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro de Atendimentos</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    .truncate-tooltip {
-      position: relative;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .truncate-tooltip:hover::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      background-color: #333;
-      color: white;
-      padding: 8px;
-      border-radius: 4px;
-      z-index: 10;
-      white-space: normal;
-      max-width: 200px;
-      top: 100%;
-      left: 0;
-      font-size: 12px;
-    }
-  </style>
-</head>
-<body class="bg-gray-100" ng-click="ctrl.fecharMenus()">
-  <div class="container p-4 bg-white rounded shadow">
-    <div class="flex space-x-4 border-b mb-4">
-      <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 flex items-center"
-        ng-class="{'ativa': ctrl.estaAtiva('incluir')}" ng-click="ctrl.irPara('incluir')">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-        </svg>
-      </button>
-      <div class="aba" ng-class="{'ativa': ctrl.estaAtiva('listar')}" ng-click="ctrl.irPara('listar')">Voltar</div>
-    </div>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
 
-    <!-- Conteúdo com transição -->
-    <div class="container-aba">
-      <div class="conteudo-aba" ng-if="ctrl.estaAtiva('listar')" ng-class="{
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Atendimentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .truncate-tooltip {
+        position: relative;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .truncate-tooltip:hover::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        background-color: #333;
+        color: white;
+        padding: 8px;
+        border-radius: 4px;
+        z-index: 10;
+        white-space: normal;
+        max-width: 200px;
+        top: 100%;
+        left: 0;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100" ng-click="ctrl.fecharMenus()">
+    <!-- Menu superior -->
+    <nav class="flex space-x-2 border-b  mt-4">
+      <button class="flex items-center px-4 py-2 rounded-t-lg"
+        ng-class="ctrl.estaAtiva('listar') ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+        ng-click="ctrl.irPara('listar')">
+   Atendimentos
+</button>
+      <button class="  flex items-center px-4 py-2 rounded-t-lg"
+        ng-class="ctrl.estaAtiva('incluir') ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+        ng-click="ctrl.irPara('incluir')">
+   Incluir Atendimento
+</button>
+
+
+
+    </nav>
+
+    <div class="container p-4 bg-white rounded shadow">
+      <div class="flex space-x-4 border-b mb-4">
+        <!-- Botão flutuante -->
+        <button ng-click="ctrl.irPara('incluir')"
+          class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-6 rounded-full shadow-lg flex items-center justify-center z-50">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Conteúdo com transição -->
+      <div class="container-aba">
+        <div class="conteudo-aba" ng-if="ctrl.estaAtiva('listar')" ng-class="{
            'slide-left-enter': ctrl.direcao === 'direita',
            'slide-left-active': ctrl.direcao === 'direita',
            'slide-right-enter': ctrl.direcao === 'esquerda',
            'slide-right-active': ctrl.direcao === 'esquerda'
          }">
-        <div class="bg-white shadow-md rounded my-4 overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200 table-fixed">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Núm. Atendimento</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data de Abertura</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Usuário Solicitante</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Número de Nota Fiscal</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ocorrência</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Análise de Causa</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo de Ocorrência</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
-                <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50" ng-repeat="item in ctrl._dataset">
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.NUATEND}}">{{item.NUATEND}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CODPARC}}">{{item.CODPARC}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.DTABERTURA}}">{{item.DTABERTURA}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CODUSU}}">{{item.CODUSU}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.NUMNOTA}}">{{item.NUMNOTA}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.OCORRENCIA}}">{{item.OCORRENCIA}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.ANALISECAUSA}}">{{item.ANALISECAUSA}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.TIPOOCORRENCIA}}">{{item.TIPOOCORRENCIA}}</td>
-                <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CATEGORIA}}">{{item.CATEGORIA}}</td>
-                <td class="w-[10%] px-2 py-4 whitespace-nowrap">
-                  <div class="relative inline-block text-left">
-                    <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
-                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01"></path>
-                      </svg>
-                    </button>
-                    <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                      <a href="#/incluir" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar</a>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Excluir</a>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <div class="container mx-auto p-6 bg-white rounded shadow min-h-screen">
+            <!-- Filtro de busca -->
+            <div class="flex items-center justify-between mb-4">
+              <input type="text" ng-model="ctrl.filtro" placeholder="🔍 Filtrar por cliente, NF ou ocorrência..."
+                class="w-1/3 p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+            </div>
+            <table class="min-w-full divide-y divide-gray-200 table-auto">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Núm. </th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Cliente</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Data de Abertura</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Usuário Solicitante</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Número de Nota Fiscal</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ocorrência</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Análise de Causa</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Tipo de Ocorrência</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Descrição</th>
+                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Ações</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                  <tr class="hover:bg-gray-50" ng-repeat="item in ctrl._dataset | filter:ctrl.filtro | startFrom:(ctrl.paginaAtual-1)*ctrl.itensPorPagina | limitTo:ctrl.itensPorPagina">
 
-      <div class="conteudo-aba" ng-if="ctrl.estaAtiva('incluir')" ng-class="{
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.NUATEND}}">{{item.NUATEND}}</td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CODPARC}}">{{item.CODPARC}}</td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.DTABERTURA}}">{{item.DTABERTURA}}
+                  </td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CODUSU}}">{{item.CODUSU}}</td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.NUMNOTA}}">{{item.NUMNOTA}}</td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.OCORRENCIA}}">{{item.OCORRENCIA}}
+                  </td>
+                  <td ng-click="ctrl.abrirModal(item.ANALISECAUSA)" class="w-[10%] px-2 py-4 truncate-tooltip"
+                    data-tooltip="{{item.ANALISECAUSA}}">
+                    {{ item.ANALISECAUSA.length > 20 ? item.ANALISECAUSA.substring(0,20) + '...' : item.ANALISECAUSA }}
+                  </td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.TIPOOCORRENCIA}}">
+                    {{item.TIPOOCORRENCIA}}</td>
+                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CATEGORIA}}">{{item.CATEGORIA}}
+                  </td>
+                  <td class="w-[10%] px-2 py-4 whitespace-nowrap">
+                    <div class="relative inline-block text-left">
+                      <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 5v.01M12 12v.01M12 19v.01"></path>
+                        </svg>
+                      </button>
+                      <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
+                        <a href="#/incluir" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Excluir</a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- Paginação -->
+          <div class="flex justify-between items-center mt-4">
+            <button ng-disabled="ctrl.paginaAtual === 1" ng-click="ctrl.paginaAtual = ctrl.paginaAtual - 1"
+              class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50">◀ Anterior</button>
+
+            <span class="text-gray-700">Página {{ctrl.paginaAtual}}</span>
+
+            <button
+              ng-disabled="(ctrl.paginaAtual * ctrl.itensPorPagina) >= (ctrl._dataset | filter:ctrl.filtro).length"
+              ng-click="ctrl.paginaAtual = ctrl.paginaAtual + 1"
+              class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50">Próximo ▶</button>
+          </div>
+          </div>
+          
+        </div>
+
+        <div class="conteudo-aba" ng-show="ctrl.estaAtiva('incluir')" ng-class="{
    'slide-left-enter': ctrl.direcao === 'direita',
    'slide-left-active': ctrl.direcao === 'direita',
    'slide-right-enter': ctrl.direcao === 'esquerda',
    'slide-right-active': ctrl.direcao === 'esquerda'
  }">
-        <div class="w-full max-w-8xl p-6 bg-white rounded-lg shadow-lg">
-          <!-- Timeline -->
-          <div class="timeline-container">
-            <div class="timeline-connector"></div>
-            <div class="timeline-progress" id="progress-bar" style="width: {{ctrl.progressWidth}}%"></div>
-            <div class="timeline-step" ng-repeat="step in ctrl.steps" ng-click="ctrl.setActiveStep(step.number)"
-              data-step="{{step.number}}">
-              <div class="timeline-circle" ng-class="{ 'active': ctrl.activeStep >= step.number }">{{step.number}}
+          <div class="w-full max-w-8xl p-6 bg-white rounded-lg shadow-lg">
+            <!-- Timeline -->
+            <div class="timeline-container">
+              <div class="timeline-connector"></div>
+              <div class="timeline-progress" id="progress-bar" style="width: {{ctrl.progressWidth}}%"></div>
+              <div class="timeline-step" ng-repeat="step in ctrl.steps" ng-click="ctrl.setActiveStep(step.number)"
+                data-step="{{step.number}}">
+                <div class="timeline-circle" ng-class="{ 'active': ctrl.activeStep >= step.number }">{{step.number}}
+                </div>
+                <div class="timeline-label">{{step.label}}</div>
               </div>
-              <div class="timeline-label">{{step.label}}</div>
             </div>
-          </div>
 
-          <!-- Formulários -->
-          <div class="form-container mt-8">
-            <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 1 }" id="step-1">
-              <h2 class="text-2xl font-bold mb-4">Solicitação</h2>
-              <hr>
-              <br>
-              <div class="columns-2 space-y-4">
-                <div>
-                  <label class="block text font-medium text-gray-700" for="nf">Nota Fiscal</label>
-                  <input type="text" class="mt-1 block w-full p-2 border rounded-md" id="nf"
-                    placeholder="Número da NF">
+            <!-- Formulários -->
+            <div class="form-container mt-8">
+              <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 1 }" id="step-1">
+                <h2 class="text-2xl font-bold mb-4">Solicitação</h2>
+                <hr>
+                <br>
+                <div class="columns-2 space-y-4">
+                  <div>
+                    <label class="block text font-medium text-gray-700" for="nf">Nota Fiscal</label>
+                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" id="nf"
+                      placeholder="Número da NF">
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700" for="cliente">Cliente</label>
+                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" id="cliente" disabled>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700" for="dtabertura">Data de Abertura</label>
+                    <input type="date" class="mt-1 block w-full p-2 border rounded-md" id="dtabertura" disabled>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Solicitante</label>
+                    <input type="date" class="mt-1 block w-full p-2 border rounded-md" disabled>
+                  </div>
                 </div>
-                <div>
-                  <label class="block text font-medium text-gray-700" for="cliente">Cliente</label>
-                  <input type="text" class="mt-1 block w-full p-2 border rounded-md" id="cliente" disabled>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text font-medium text-gray-700">Ocorrência</label>
+                    <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Análise da Causa</label>
+                    <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
+                  </div>
                 </div>
-                <div>
-                  <label class="block text font-medium text-gray-700" for="dtabertura">Data de Abertura</label>
-                  <input type="date" class="mt-1 block w-full p-2 border rounded-md" id="dtabertura" disabled>
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Solicitante</label>
-                  <input type="date" class="mt-1 block w-full p-2 border rounded-md" disabled>
-                </div>
-              </div>
-              <div class="space-y-4">
-                <div>
-                  <label class="block text font-medium text-gray-700">Ocorrência</label>
-                  <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Análise da Causa</label>
-                  <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
-                </div>
-              </div>
-              <br>
-              <hr>
-              <br>
-              <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
-            </div>
-            <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 2 }" id="step-2">
-              <h2 class="text-2xl font-bold mb-4">Qualidade</h2>
-              <hr>
-              <br>
-              <div class="space-y-4">
-                <div>
-                  <label class="block text font-medium text-gray-700">Categoria Chamado</label>
-                  <select name="categoria_chamado" id="categoria_chamado"
-                    class="mt-1 block w-full p-2 border rounded-md">
-                    <option value="" selected>Selecione uma opção</option>
-                    <option value="RAC">Registro de Atendimento ao Cliente</option>
-                    <option value="NC">Tratamento de Não Conformidade</option>
-                  </select>
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Observações</label>
-                  <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
-                </div>
+                <br>
+                <hr>
+                <br>
                 <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
               </div>
-            </div>
-            <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 3 }" id="step-3">
-              <h2 class="text-2xl font-bold mb-4">Aprovações</h2>
-              <hr>
-              <br>
-              <div class="space-y-4">
-                <div>
-                  <label class="toggle-label text font-medium text-gray-700">
-                    <input type="checkbox" class="toggle-checkbox">
-                    <span class="toggle-switch"></span>
-                    Todos os documentos foram recebidos?
-                  </label>
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Ação imediata</label>
-                  <textarea type="text" class="block w-full p-2 border rounded-md" rows="5"></textarea>
-                </div>
-              </div>
-              <br>
-              <div class="space-y-4">
-                <div>
-                  <h3><b>Aprovação Comercial</b></h3>
-                  <hr>
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Aprovação (Comercial)</label>
-                  <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Seu cargo">
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Data/Hora de Aprovação(Comercial)</label>
-                  <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Nome da empresa">
-                </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Justificativa</label>
-                  <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
+              <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 2 }" id="step-2">
+                <h2 class="text-2xl font-bold mb-4">Qualidade</h2>
+                <hr>
+                <br>
+                <div class="space-y-4">
+                  <div>
+                    <label class="block text font-medium text-gray-700">Categoria Chamado</label>
+                    <select name="categoria_chamado" id="categoria_chamado"
+                      class="mt-1 block w-full p-2 border rounded-md">
+                      <option value="" selected>Selecione uma opção</option>
+                      <option value="RAC">Registro de Atendimento ao Cliente</option>
+                      <option value="NC">Tratamento de Não Conformidade</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Observações</label>
+                    <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
+                  </div>
+                  <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
                 </div>
               </div>
-              <br>
-              <div class="space-y-4">
-                <div>
-                  <h3><b>Aprovação Financeiro</b></h3>
-                  <hr>
+              <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 3 }" id="step-3">
+                <h2 class="text-2xl font-bold mb-4">Aprovações</h2>
+                <hr>
+                <br>
+                <div class="space-y-4">
+                  <div>
+                    <label class="toggle-label text font-medium text-gray-700">
+                      <input type="checkbox" class="toggle-checkbox">
+                      <span class="toggle-switch"></span>
+                      Todos os documentos foram recebidos?
+                    </label>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Ação imediata</label>
+                    <textarea type="text" class="block w-full p-2 border rounded-md" rows="5"></textarea>
+                  </div>
                 </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Aprovação(Financeiro)</label>
-                  <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Seu cargo">
+                <br>
+                <div class="space-y-4">
+                  <div>
+                    <h3><b>Aprovação Comercial</b></h3>
+                    <hr>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Aprovação (Comercial)</label>
+                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Seu cargo">
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Data/Hora de Aprovação(Comercial)</label>
+                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Nome da empresa">
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Justificativa</label>
+                    <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
+                  </div>
                 </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Data/Hora de Aprovação(Financeiro)</label>
-                  <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Nome da empresa">
+                <br>
+                <div class="space-y-4">
+                  <div>
+                    <h3><b>Aprovação Financeiro</b></h3>
+                    <hr>
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Aprovação(Financeiro)</label>
+                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Seu cargo">
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Data/Hora de Aprovação(Financeiro)</label>
+                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" placeholder="Nome da empresa">
+                  </div>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Justificativa</label>
+                    <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
+                  </div>
+                  <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
                 </div>
-                <div>
-                  <label class="block text font-medium text-gray-700">Justificativa</label>
-                  <textarea type="text" class="mt-1 block w-full p-2 border rounded-md" rows="5"></textarea>
-                </div>
-                <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
+                <hr>
+                <br>
               </div>
-              <hr>
-              <br>
-            </div>
-            <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 4 }" id="step-4">
-              <h2 class="text-2xl font-bold mb-4">Financeiro</h2>
-              <div class="space-y-4">
-                <p class="text-gray-600">Por favor, revise todas as informações fornecidas antes de enviar.</p>
-                <div>
-                  <label class="block text font-medium text-gray-700">Comentários Adicionais</label>
-                  <textarea class="mt-1 block w-full p-2 border rounded-md" rows="4"
-                    placeholder="Algum comentário?"></textarea>
+              <div class="form-section" ng-class="{ 'active': ctrl.activeStep === 4 }" id="step-4">
+                <h2 class="text-2xl font-bold mb-4">Financeiro</h2>
+                <div class="space-y-4">
+                  <p class="text-gray-600">Por favor, revise todas as informações fornecidas antes de enviar.</p>
+                  <div>
+                    <label class="block text font-medium text-gray-700">Comentários Adicionais</label>
+                    <textarea class="mt-1 block w-full p-2 border rounded-md" rows="4"
+                      placeholder="Algum comentário?"></textarea>
+                  </div>
+                  <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
+                  <button class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Enviar</button>
                 </div>
-                <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
-                <button class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Enviar</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</body>
-</html>
+
+      <!-- Modal -->
+      <div ng-show="ctrl.modalAberto"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white w-1/2 p-6 rounded-lg shadow-lg relative">
+
+         
+          <div class="flex justify-between items-center ">
+                      <h2 class="text-xl font-bold mb-4">Análise de Causa</h2>
+
+             <!-- Botão fechar -->
+          <button class=" text-gray-600 hover:text-black font-bold" ng-click="ctrl.fecharModal()">
+            ✖ 
+          </button>
+          </div>
+          <p class="text-gray-700 whitespace-pre-wrap">{{ ctrl.textoModal }}</p>
+        </div>
+      </div>
+
+  </body>
+
+  </html>
 </sk-application>
