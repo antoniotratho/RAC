@@ -7,54 +7,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Atendimentos</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      .truncate-tooltip {
-        position: relative;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .truncate-tooltip:hover::after {
-        content: attr(data-tooltip);
-        position: absolute;
-        background-color: #333;
-        color: white;
-        padding: 8px;
-        border-radius: 4px;
-        z-index: 10;
-        white-space: normal;
-        max-width: 200px;
-        top: 100%;
-        left: 0;
-        font-size: 12px;
-      }
-    </style>
+  
   </head>
 
-  <body class="bg-gray-100" ng-click="ctrl.fecharMenus()">
-    <!-- Menu superior -->
-    <nav class="flex space-x-2 border-b  mt-4">
-      <button class="flex items-center px-4 py-2 rounded-t-lg"
+  <body ng-click="ctrl.fecharMenus()" class="bg-gray-100 text-gray-800 text-base leading-relaxed"
+    ng-click="ctrl.fecharMenus()">
+ <!-- Loader inicial com CSS inline -->
+  <div id="loading" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:white;z-index:9999;">
+    <div style="width:64px;height:64px;border:4px solid #22c55e;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
+  </div>
+
+  <style>
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+
+
+   
+
+    <div class="container w-full p-4 bg-white rounded shadow-lg sk-overflow-y=">
+       <!-- Menu superior -->
+    <nav class="flex space-x-2 border-b mt-4   ">
+      <button 
         ng-class="ctrl.estaAtiva('listar') ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-        ng-click="ctrl.irPara('listar')">
-   Atendimentos
-</button>
-      <button class="  flex items-center px-4 py-2 rounded-t-lg"
+        ng-click="ctrl.irPara('listar')"
+        class="text-xl font-bold flex items-center px-6 py-4 rounded-t-lg">
+        Atendimentos
+      </button>
+      <button  ng-show="ctrl.estaAtiva('incluir') || ctrl.estaAtiva('listar') "
         ng-class="ctrl.estaAtiva('incluir') ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
-        ng-click="ctrl.irPara('incluir')">
-   Incluir Atendimento
-</button>
-
-
-
+        ng-click="ctrl.irPara('incluir')"
+        class="text-xl font-bold flex items-center px-6 py-4 rounded-t-lg">
+        Novo Atendimento
+      </button>
     </nav>
-
-    <div class="container p-4 bg-white rounded shadow">
-      <div class="flex space-x-4 border-b mb-4">
+      <div class="flex space-x-4  mb-4">
         <!-- Botão flutuante -->
         <button ng-click="ctrl.irPara('incluir')"
-          class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-6 rounded-full shadow-lg flex items-center justify-center z-50">
+          class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-6 hover:p-8 transition-all rounded-full shadow-lg flex items-center justify-center z-50">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
           </svg>
@@ -69,88 +58,132 @@
            'slide-right-enter': ctrl.direcao === 'esquerda',
            'slide-right-active': ctrl.direcao === 'esquerda'
          }">
-          <div class="container mx-auto p-6 bg-white rounded shadow min-h-screen">
+         <!-- class min-h-screen-->
+          <div class="container mx-auto p-4 bg-white rounded shadow">
             <!-- Filtro de busca -->
             <div class="flex items-center justify-between mb-4">
-              <input type="text" ng-model="ctrl.filtro" placeholder="🔍 Filtrar por cliente, NF ou ocorrência..."
-                class="w-1/3 p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+              <div class="relative w-1/3">
+  <!-- Ícone SVG -->
+  <div class="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+    <svg xmlns="http://www.w3.org/2000/svg" style="width: 1.25rem; height:1.25rem;"  class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+    </svg>
+  </div>
+  
+  <!-- Input -->
+  <input type="text" ng-model="ctrl.filtro" placeholder="Filtrar por cliente, NF ou ocorrência..."
+    class="w-full pl-8 p-2 border rounded-md focus:ring-2 focus:ring-green-500">
+</div>
+
             </div>
             <table class="min-w-full divide-y divide-gray-200 table-auto">
-              <thead class="bg-gray-50">
+              <thead class="bg-gray-100">
                 <tr>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Núm. </th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Cliente</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Data de Abertura</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Usuário Solicitante</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Número de Nota Fiscal</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Ocorrência</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Análise de Causa</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Tipo de Ocorrência</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Descrição</th>
-                  <th class="w-[10%] px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 py-3 text-left text-md font-bold text-gray-600 uppercase ">
                     Ações</th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                  <tr class="hover:bg-gray-50" ng-repeat="item in ctrl._dataset | filter:ctrl.filtro | startFrom:(ctrl.paginaAtual-1)*ctrl.itensPorPagina | limitTo:ctrl.itensPorPagina">
+                <tr class="hover:bg-gray-50"
+                  ng-repeat="item in ctrl._dataset | filter:ctrl.filtro | startFrom:(ctrl.paginaAtual-1)*ctrl.itensPorPagina | limitTo:ctrl.itensPorPagina">
 
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.NUATEND}}">{{item.NUATEND}}</td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CODPARC}}">{{item.CODPARC}}</td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.DTABERTURA}}">{{item.DTABERTURA}}
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.NUATEND}}">
+                    {{item.NUATEND}}</td>
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.CODPARC}}">
+                    {{item.CODPARC}}</td>
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.DTABERTURA}}">
+                    {{item.DTABERTURA}}
                   </td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CODUSU}}">{{item.CODUSU}}</td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.NUMNOTA}}">{{item.NUMNOTA}}</td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.OCORRENCIA}}">{{item.OCORRENCIA}}
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.CODUSU}}">
+                    {{item.CODUSU}}</td>
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.NUMNOTA}}">
+                    {{item.NUMNOTA}}</td>
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.OCORRENCIA}}">
+                    {{item.OCORRENCIA}}
                   </td>
-                  <td ng-click="ctrl.abrirModal(item.ANALISECAUSA)" class="w-[10%] px-2 py-4 truncate-tooltip"
-                    data-tooltip="{{item.ANALISECAUSA}}">
+                  <td ng-click="ctrl.abrirModal(item.ANALISECAUSA)"
+                    class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.ANALISECAUSA}}">
                     {{ item.ANALISECAUSA.length > 20 ? item.ANALISECAUSA.substring(0,20) + '...' : item.ANALISECAUSA }}
                   </td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.TIPOOCORRENCIA}}">
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.TIPOOCORRENCIA}}">
                     {{item.TIPOOCORRENCIA}}</td>
-                  <td class="w-[10%] px-2 py-4 truncate-tooltip" data-tooltip="{{item.CATEGORIA}}">{{item.CATEGORIA}}
+                  <td class="px-2 py-2 text-md text-gray-700 truncate-tooltip" data-tooltip="{{item.CATEGORIA}}">
+                    {{item.CATEGORIA}}
                   </td>
-                  <td class="w-[10%] px-2 py-4 whitespace-nowrap">
-                    <div class="relative inline-block text-left">
-                      <button class="text-gray-500 hover:text-gray-700 focus:outline-none">
-                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 5v.01M12 12v.01M12 19v.01"></path>
-                        </svg>
+                  <td class="w-[10%] px-2 py-2 whitespace-nowrap">
+                    <div class="relative inline-block text-left" ng-init="item.menuAberto = false">
+                      <!-- Botão -->
+                      <button ng-click="item.menuAberto = !item.menuAberto; $event.stopPropagation();"
+                        class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        <svg  xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 " fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+
                       </button>
-                      <div class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
-                        <a href="#/incluir" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Editar</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Excluir</a>
-                      </div>
+
+                    <!-- Dropdown -->
+<div ng-show="item.menuAberto" ng-click="$event.stopPropagation()"
+     class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-xl shadow-xl z-50
+            transform transition duration-200 ease-out origin-top-right"
+     ng-class="{
+         'opacity-100 scale-100': item.menuAberto,
+         'opacity-0 scale-95 pointer-events-none': !item.menuAberto
+     }">
+    <button 
+        class="flex gap-2  block w-full text-left px-4 py-3 text-md text-gray-700 hover:bg-gray-100 transition-colors rounded-t-xl">
+       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+</svg>editar
+
+    </button>
+    <button ng-click="ctrl.excluir(item)"
+        class=" flex gap-2 block w-full text-left px-4 py-3 text-md text-red-600 hover:bg-red-100 transition-colors rounded-b-xl">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+</svg>excluir
+
+    </button>
+</div>
+
+
                     </div>
                   </td>
+
                 </tr>
               </tbody>
             </table>
             <!-- Paginação -->
-          <div class="flex justify-between items-center mt-4">
-            <button ng-disabled="ctrl.paginaAtual === 1" ng-click="ctrl.paginaAtual = ctrl.paginaAtual - 1"
-              class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50">◀ Anterior</button>
+            <div class="flex gap-4 items-center mt-4 w-48">
+              <button ng-disabled="ctrl.paginaAtual === 1" ng-click="ctrl.paginaAtual = ctrl.paginaAtual - 1"
+                class="cursor-pointer px-3  py-1 bg-gray-200 rounded disabled:opacity-50">◀</button>
 
-            <span class="text-gray-700">Página {{ctrl.paginaAtual}}</span>
+              <span class="text-gray-700">Pág {{ctrl.paginaAtual}}</span>
 
-            <button
-              ng-disabled="(ctrl.paginaAtual * ctrl.itensPorPagina) >= (ctrl._dataset | filter:ctrl.filtro).length"
-              ng-click="ctrl.paginaAtual = ctrl.paginaAtual + 1"
-              class="px-3 py-1 bg-gray-200 rounded disabled:opacity-50">Próximo ▶</button>
+              <button
+                ng-disabled="(ctrl.paginaAtual * ctrl.itensPorPagina) >= (ctrl._dataset | filter:ctrl.filtro).length"
+                ng-click="ctrl.paginaAtual = ctrl.paginaAtual + 1"
+                class="cursor-pointer px-3 py-1 bg-gray-200 rounded disabled:opacity-50">▶</button>
+            </div>
           </div>
-          </div>
-          
+
         </div>
 
         <div class="conteudo-aba" ng-show="ctrl.estaAtiva('incluir')" ng-class="{
@@ -181,12 +214,12 @@
                 <div class="columns-2 space-y-4">
                   <div>
                     <label class="block text font-medium text-gray-700" for="nf">Nota Fiscal</label>
-                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" id="nf"
+                    <input type="text" class="mt-1 block w-full p-3 border rounded-md" id="nf"
                       placeholder="Número da NF">
                   </div>
                   <div>
                     <label class="block text font-medium text-gray-700" for="cliente">Cliente</label>
-                    <input type="text" class="mt-1 block w-full p-2 border rounded-md" id="cliente" disabled>
+                    <input type="text" class="mt-1 block w-full p-3 border rounded-md" id="cliente" disabled>
                   </div>
                   <div>
                     <label class="block text font-medium text-gray-700" for="dtabertura">Data de Abertura</label>
@@ -302,7 +335,6 @@
                       placeholder="Algum comentário?"></textarea>
                   </div>
                   <button class="w-full bg-green-600 text-white p-2 rounded-md hover:bg-green-700">Salvar</button>
-                  <button class="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700">Enviar</button>
                 </div>
               </div>
             </div>
@@ -315,18 +347,31 @@
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div class="bg-white w-1/2 p-6 rounded-lg shadow-lg relative">
 
-         
-          <div class="flex justify-between items-center ">
-                      <h2 class="text-xl font-bold mb-4">Análise de Causa</h2>
 
-             <!-- Botão fechar -->
-          <button class=" text-gray-600 hover:text-black font-bold" ng-click="ctrl.fecharModal()">
-            ✖ 
-          </button>
+          <div class="flex justify-between items-center ">
+            <h2 class="text-xl font-bold mb-4">Análise de Causa</h2>
+
+            <!-- Botão fechar -->
+            <button class=" text-gray-600 hover:text-black font-bold" ng-click="ctrl.fecharModal()">
+              ✖
+            </button>
           </div>
           <p class="text-gray-700 whitespace-pre-wrap">{{ ctrl.textoModal }}</p>
         </div>
       </div>
+
+      <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const loader = document.getElementById("loading");
+    if (loader) {
+      loader.style.transition = "opacity 0.5s";
+      loader.style.opacity = "0";
+      setTimeout(() => loader.remove(), 500);
+    }
+  });
+</script>
+
+
 
   </body>
 

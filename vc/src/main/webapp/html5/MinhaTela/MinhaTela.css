@@ -1,108 +1,140 @@
-    .aba {
-      padding: 10px;
-      cursor: pointer;
-    }
+:root {
+  --cor-ativa: #00c969;
+  --cor-fundo: #e5e7eb;
+  --cor-fundo-hover: #f3f4f6;
+  --cor-texto: #333;
+  --cor-texto-hover: #fff;
+  --cor-texto-red: #ef4444;
+  --cor-borda: #d1d5db;
+  --cor-input-focus: #22c55e;
+}
 
-    .ativa {
-      font-weight: bold;
-      border-bottom: 2px solid blue;
-    }
+.aba {
+  padding: 10px;
+  cursor: pointer;
+}
 
-    .container-aba {
-      position: relative;
-      overflow: hidden;
-      height: 100vh;
-    }
+.ativa {
+  font-weight: bold;
+  border-bottom: 2px solid var(--cor-ativa);
+}
 
-    .conteudo-aba {
-      position: absolute;
-      width: 100%;
-      transition: transform 0.4s ease;
-      opacity: 1;
-    }
+.container-aba {
+  position: relative;
+  overflow: hidden;
+  min-height: auto;
+}
 
-    .slide-left-enter {
-      transform: translateX(100%);
-    }
+.conteudo-aba {
+  position: relative;
+  width: 100%;
+  transition: transform 0.4s ease;
+}
 
-    .slide-left-active {
-      transform: translateX(0%);
-    }
+.slide-left-enter {
+  transform: translateX(100%);
+}
 
-    .slide-right-enter {
-      transform: translateX(-100%);
-    }
+.slide-left-active {
+  transform: translateX(0%);
+}
 
-    .slide-right-active {
-      transform: translateX(0%);
-    }
+.slide-right-enter {
+  transform: translateX(-100%);
+}
 
-    .timeline-container {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
-    }
+.slide-right-active {
+  transform: translateX(0%);
+}
 
-    .timeline-step {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-      cursor: pointer;
-      width: 25%;
-    }
+.timeline-container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+}
 
-    .timeline-circle {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background-color: #e5e7eb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  width: 25%;
+}
 
-    .timeline-circle.active {
-      background-color: #2563eb;
-      color: white;
-    }
+.timeline-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--cor-fundo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
 
-    .timeline-label {
-      margin-top: 8px;
-      text-align: center;
-      font-size: 14px;
-      font-weight: medium;
-    }
+.timeline-circle.active {
+  background-color: var(--cor-ativa);
+  color: var(--cor-texto-hover);
+}
 
-    .timeline-connector {
-      position: absolute;
-      top: 40px;
-      left: calc(12.5% + 20px);
-      right: calc(12.5% + 20px);
-      height: 4px;
-      background-color: #e5e7eb;
-      z-index: 0;
-    }
+.timeline-label {
+  margin-top: 8px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: medium;
+}
 
-    .timeline-progress {
-      position: absolute;
-      top: 40px;
-      left: calc(12.5% + 20px);
-      height: 4px;
-      background-color: #2563eb;
-      transition: width 0.3s ease;
-      z-index: 0;
-    }
+.timeline-connector {
+  position: absolute;
+  top: 40px;
+  left: calc(12.5% + 20px);
+  right: calc(12.5% + 20px);
+  height: 4px;
+  background-color: var(--cor-fundo);
+  z-index: 0;
+}
 
-    .form-section {
-      display: none;
-    }
+.timeline-progress {
+  position: absolute;
+  top: 40px;
+  left: calc(12.5% + 20px);
+  height: 4px;
+  background-color: var(--cor-ativa);
+  transition: width 0.3s ease;
+  z-index: 0;
+}
 
-    .form-section.active {
-      display: block;
-    }
+.form-section {
+  display: none;
+}
+
+.form-section.active {
+  display: block;
+}
+
+.truncate-tooltip {
+  position: relative;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.truncate-tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  background-color: var(--cor-texto);
+  color: var(--cor-texto-hover);
+  padding: 8px;
+  border-radius: 4px;
+  z-index: 10;
+  white-space: normal;
+  max-width: 200px;
+  top: 100%;
+  left: 0;
+  font-size: 12px;
+}
